@@ -10,7 +10,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/ButtonStyle"
+        style="@style/ButtonStyleGreen"
         android:layout_margin="2dp"
         android:id="@+id/id_add_ticket_button"
         android:text="Add New Ticket"/>
@@ -19,14 +19,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/id_manage_tickets_button"
-        style="@style/ButtonStyle"
+        style="@style/ButtonStyleGreen"
         android:layout_margin="2dp"
         android:text="Manage Tickets"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/ButtonStyle"
+        style="@style/ButtonStyleGreen"
         android:layout_margin="2dp"
         android:id="@+id/id_manage_credit_button"
         android:text="Manage Credit Request"/>
@@ -34,7 +34,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/ButtonStyle"
+        style="@style/ButtonStyleGreen"
         android:layout_margin="2dp"
         android:id="@+id/id_add_admin_button"
         android:text="Add New Admin"/>

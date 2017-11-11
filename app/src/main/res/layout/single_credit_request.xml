@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:layout_margin="2dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Username"
+        android:id="@+id/id_username"
+        android:textColor="@android:color/background_dark"
+        android:layout_weight="0.4"
+        android:textSize="22sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="0000"
+        android:id="@+id/id_amount"
+        android:textColor="@android:color/background_dark"
+        android:textSize="22sp"
+        android:textAlignment="center"
+        android:layout_weight="0.2"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Accept"
+        android:id="@+id/id_accept_req"
+        style="@style/ButtonStyleGreen"
+        android:layout_weight="0.2"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reject"
+        style="@style/ButtonStyleRed"
+        android:id="@+id/id_reject_req"
+        android:layout_weight="0.2"/>
+
+</LinearLayout>

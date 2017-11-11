@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:columnCount="2"
+    android:layout_gravity="center">
+
+    <Button
+        android:id="@+id/id_movies_cat"
+        android:text="Movies"
+        style="@style/CatButtonStyle"/>
+
+    <Button
+        android:id="@+id/id_travel_cat"
+        android:text="Travel"
+        style="@style/CatButtonStyle"/>
+
+    <Button
+        android:id="@+id/id_sports_cat"
+        android:text="Sports"
+        style="@style/CatButtonStyle"/>
+
+    <Button
+        android:id="@+id/id_show_cat"
+        android:text="Show"
+        style="@style/CatButtonStyle"/>
+
+</GridLayout>

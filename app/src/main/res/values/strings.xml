@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Tick-It Admin</string>
+    <string name="no_internet_message">Enable WIFI and press OK</string>
+    <string name="no_internet_title">No Internet Access</string>
+</resources>

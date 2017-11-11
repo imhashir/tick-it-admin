@@ -2,4 +2,17 @@
     <string name="app_name">Tick-It Admin</string>
     <string name="no_internet_message">Enable WIFI and press OK</string>
     <string name="no_internet_title">No Internet Access</string>
+    <string name="movie_option">Movie</string>
+    <string name="sports_option">Sports</string>
+    <string name="show_option">Show</string>
+    <string name="transport_option">Transport</string>
+    <string name="option_none">Select</string>
+
+    <string-array name="ticket_types">
+        <item>@string/option_none</item>
+        <item>@string/movie_option</item>
+        <item>@string/show_option</item>
+        <item>@string/sports_option</item>
+        <item>@string/transport_option</item>
+    </string-array>
 </resources>

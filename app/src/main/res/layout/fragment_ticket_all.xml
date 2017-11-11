@@ -21,8 +21,9 @@
 
     <EditText
         android:id="@+id/id_input_end_time"
-        style="@style/TicketInputStyle"
+        android:textAppearance="@style/TicketInputStyle"
         android:layout_height="wrap_content"
+        android:layout_width="200dp"
         android:layout_marginEnd="8dp"
         android:hint="Name"
         android:textSize="18dp"
@@ -36,7 +37,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
-        android:style="@style/TextStyle"
+        style="@style/TextStyle"
         android:text="Price"
         app:layout_constraintBottom_toBottomOf="@+id/id_input_dest"
         app:layout_constraintEnd_toStartOf="@+id/id_input_dest"
@@ -62,7 +63,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
-        android:style="@style/TextStyle"
+        style="@style/TextStyle"
         android:text="Seats"
         app:layout_constraintBottom_toBottomOf="@+id/id_input_seats"
         app:layout_constraintEnd_toStartOf="@+id/id_input_seats"
@@ -89,11 +90,12 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
-        android:style="@style/TextStyle"
+        style="@style/TextStyle"
         android:text="Place"
         app:layout_constraintBottom_toBottomOf="@+id/id_input_place"
         app:layout_constraintEnd_toStartOf="@+id/id_input_place"
-        app:layout_constraintTop_toTopOf="@+id/id_input_place"/>
+        app:layout_constraintTop_toTopOf="@+id/id_input_place"
+        android:layout_marginRight="8dp"/>
 
     <TextView
         android:id="@+id/id_text_date"
@@ -102,11 +104,12 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
-        android:style="@style/TextStyle"
+        style="@style/TextStyle"
         android:text="Date Time"
         app:layout_constraintBottom_toBottomOf="@+id/id_input_date"
         app:layout_constraintEnd_toStartOf="@+id/id_input_date"
-        app:layout_constraintTop_toTopOf="@+id/id_input_date"/>
+        app:layout_constraintTop_toTopOf="@+id/id_input_date"
+        android:layout_marginRight="8dp"/>
 
     <EditText
         android:id="@+id/id_input_place"
@@ -131,6 +134,7 @@
         android:hint="Seats"
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/id_input_place"/>
+        app:layout_constraintTop_toBottomOf="@+id/id_input_place"
+        android:layout_marginRight="8dp"/>
 
 </android.support.constraint.ConstraintLayout>

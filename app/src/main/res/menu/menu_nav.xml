@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/id_home"
+    <item android:id="@+id/menu_home"
         android:title="Home"/>
 
-    <item android:id="@+id/id_add_ticket"
+    <item android:id="@+id/menu_add_ticket"
           android:title="Add Ticket"/>
 
-    <item android:id="@+id/id_manage_tickets"
+    <item android:id="@+id/menu_manage_tickets"
           android:title="Manage Tickets"/>
 
-    <item android:id="@+id/id_add_admin"
+    <item android:id="@+id/menu_add_admin"
           android:title="Add New Admin"/>
 
-    <item android:id="@+id/id_credit_reqs"
+    <item android:id="@+id/menu_credit_reqs"
           android:title="View Credit Requests"/>
 
 </menu>

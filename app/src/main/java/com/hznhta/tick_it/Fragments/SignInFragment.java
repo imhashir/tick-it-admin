@@ -36,23 +36,23 @@ public class SignInFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_sign_in, container, false);
         ButterKnife.bind(this, v);
         mSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AccountsController.newInstance().signInAdmin(mEmailInput.getText().toString(), mPasswordInput.getText().toString(), new AccountsController.OnAdminSignedInListener() {
+                AccountsController.newInstance().signInAdmin(mEmailInput.getText().toString(), mPasswordInput.getText().toString(), new AccountsController.OnActionCompletedListener() {
                     @Override
-                    public void onSignInSuccessfull() {
+                    public void onActionSucceed() {
                         Log.i(TAG, "Signed In!");
                         startActivity(NavViewActivity.newIntent(getActivity(), null));
                         getActivity().finish();
                     }
 
                     @Override
-                    public void onSignInFailed(String err) {
-                        Snackbar.make(v, err, Snackbar.LENGTH_LONG).show();
+                    public void onActionFailed(String err) {
+                        Snackbar.make(container, err, Snackbar.LENGTH_LONG).show();
                     }
                 });
             }

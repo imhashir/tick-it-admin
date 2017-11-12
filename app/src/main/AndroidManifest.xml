@@ -22,6 +22,7 @@
         </activity>
         <activity android:name=".Activities.AddAdminActivity"/>
         <activity android:name=".Activities.TicketListActivity"/>
+        <activity android:name=".Activities.EditTicketActivity"/>
 
     </application>
 

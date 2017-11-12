@@ -118,6 +118,8 @@ public class NavViewActivity extends BaseActivity implements NavigationView.OnNa
                 break;
             case R.id.menu_credit_reqs:
                 break;
+            default:
+                setFragmentView(HomeFragment.newInstance());
         }
     }
 }

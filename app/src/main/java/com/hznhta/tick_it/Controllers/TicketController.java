@@ -30,6 +30,20 @@ public class TicketController {
         return new TicketController();
     }
 
+    public void updateTicket(Ticket ticket, int type, OnActionCompletedListener listener) {
+        mOnActionCompletedListener = listener;
+        FirebaseDatabase.getInstance().getReference("tickets").child(types[type]).child(ticket.getUid()).setValue(ticket).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()) {
+                    mOnActionCompletedListener.onActionSucceed();
+                } else {
+                    mOnActionCompletedListener.onActionFailed(task.getException().toString());
+                }
+            }
+        });
+    }
+
     public void addNewTicket(Ticket ticket, int type, OnActionCompletedListener listener) {
         mOnActionCompletedListener = listener;
 

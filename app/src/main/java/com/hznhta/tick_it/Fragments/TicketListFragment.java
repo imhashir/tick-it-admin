@@ -1,5 +1,6 @@
 package com.hznhta.tick_it.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hznhta.tick_it.Activities.EditTicketActivity;
 import com.hznhta.tick_it.Controllers.TicketController;
 import com.hznhta.tick_it.Interfaces.OnActionCompletedListener;
 import com.hznhta.tick_it.Models.Ticket;
@@ -106,7 +108,8 @@ public class TicketListFragment extends Fragment {
         }
     }
 
-    private class TicketHolder extends RecyclerView.ViewHolder {
+    private class TicketHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener{
 
         private Ticket mTicket;
         private OnItemDeleteListener mOnItemDeleteListener;
@@ -118,6 +121,7 @@ public class TicketListFragment extends Fragment {
             super(itemView);
             mTextView = itemView.findViewById(R.id.id_ticket_name);
             mDeleteButton = itemView.findViewById(R.id.id_delete_ticket_button);
+            itemView.setOnClickListener(this);
         }
 
         public void bindView(Ticket ticket) {
@@ -140,6 +144,12 @@ public class TicketListFragment extends Fragment {
                     });
                 }
             });
+        }
+
+        @Override
+        public void onClick(View view) {
+            Intent i = EditTicketActivity.newIntent(getActivity(), mTicket, mType);
+            startActivity(i);
         }
 
         public void setOnItemDeleteListener(OnItemDeleteListener onItemDeleteListener) {

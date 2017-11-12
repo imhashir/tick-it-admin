@@ -7,12 +7,17 @@ import android.widget.EditText;
 
 import com.hznhta.tick_it.R;
 
-public abstract class Ticket {
+import java.io.Serializable;
+
+public abstract class Ticket implements Serializable{
 
     public final static int MOVIE_TICKET = 0;
     public final static int SHOW_TICKET = 1;
     public final static int TRANSPORT_TICKET = 2;
     public final static int SPORTS_TICKET = 3;
+
+    public final static int BUTTON_ADD = 11;
+    public final static int BUTTON_UPDATE = 22;
 
     private String uid;
     private String name;
@@ -41,6 +46,14 @@ public abstract class Ticket {
         this.seats = seats;
         this.place = place;
         this.dateTime = dateTime;
+    }
+
+    protected static void populateTicketView(Ticket ticket) {
+        sTicketName.setText(ticket.getName());
+        sTicketSeats.setText(ticket.getSeats() + "");
+        sTicketPrice.setText(ticket.getPrice() + "");
+        sTicketPlace.setText(ticket.getPlace() + "");
+        sTicketDate.setText(ticket.getDateTime() + "");
     }
 
     protected static View getTicketView(Context context, int type) {

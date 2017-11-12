@@ -1,6 +1,7 @@
 package com.hznhta.tick_it.Models;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,10 +17,12 @@ public class TransportTicket extends Ticket {
     private String destination;
     private String arrivalTime;
 
-    private static EditText mSource;
-    private static EditText mDestination;
-    private static EditText mArrivalTime;
-    private static Button mAddButton;
+    private static final String TAG = "TransportTicket";
+
+    private static EditText sSource;
+    private static EditText sDestination;
+    private static EditText sArrivalTime;
+    private static Button sAddButton;
 
     public TransportTicket() {
         super();
@@ -33,15 +36,27 @@ public class TransportTicket extends Ticket {
         this.arrivalTime = arrivalTime;
     }
 
+    public static void populateTicket(TransportTicket ticket) {
+        populateTicketView(ticket);
+        sSource.setText(ticket.getSource() + "");
+        sDestination.setText(ticket.getDestination() + "");
+        sArrivalTime.setText(ticket.getArrivalTime() + "");
+        sAddButton.setText("Update");
+    }
+
     public static View getView(final Context context) {
         View v = getTicketView(context, TRANSPORT_TICKET);
 
-        mSource = v.findViewById(R.id.id_input_source);
-        mDestination = v.findViewById(R.id.id_input_dest);
-        mArrivalTime = v.findViewById(R.id.id_input_arrival_time);
-        mAddButton = v.findViewById(R.id.id_add_ticket_button);
+        sSource = v.findViewById(R.id.id_input_source);
+        sDestination = v.findViewById(R.id.id_input_dest);
+        sArrivalTime = v.findViewById(R.id.id_input_arrival_time);
+        sAddButton = v.findViewById(R.id.id_add_ticket_button);
 
-        mAddButton.setOnClickListener(new View.OnClickListener() {
+        return v;
+    }
+
+    public static void setButtonAction(final Context context, final String uid, final int action) {
+        sAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 TransportTicket ticket = new TransportTicket(
@@ -50,32 +65,51 @@ public class TransportTicket extends Ticket {
                         Integer.parseInt(sTicketSeats.getText().toString()),
                         sTicketPlace.getText().toString(),
                         sTicketDate.getText().toString(),
-                        mSource.getText().toString(),
-                        mDestination.getText().toString(),
-                        mArrivalTime.getText().toString());
-                TicketController.newInstance().addNewTicket(ticket, TRANSPORT_TICKET, new OnActionCompletedListener() {
-                    @Override
-                    public void onActionSucceed() {
-                        Toast.makeText(context, "Ticket added!", Toast.LENGTH_LONG).show();
-                        clearFields();
-                    }
+                        sSource.getText().toString(),
+                        sDestination.getText().toString(),
+                        sArrivalTime.getText().toString());
 
-                    @Override
-                    public void onActionFailed(String err) {
-                        Toast.makeText(context, "", Toast.LENGTH_LONG).show();
-                    }
-                });
+                ticket.setUid(uid);
+
+                switch (action) {
+                    case BUTTON_ADD:
+                        TicketController.newInstance().addNewTicket(ticket, TRANSPORT_TICKET, new OnActionCompletedListener() {
+                            @Override
+                            public void onActionSucceed() {
+                                Toast.makeText(context, "Ticket added!", Toast.LENGTH_LONG).show();
+                                clearFields();
+                            }
+
+                            @Override
+                            public void onActionFailed(String err) {
+                                Log.wtf(TAG, err);
+                                Toast.makeText(context, "Failed to add ticket!", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                        break;
+                    case BUTTON_UPDATE:
+                        TicketController.newInstance().updateTicket(ticket, TRANSPORT_TICKET, new OnActionCompletedListener() {
+                            @Override
+                            public void onActionSucceed() {
+                                Toast.makeText(context, "Ticket Updated!", Toast.LENGTH_LONG).show();
+                            }
+
+                            @Override
+                            public void onActionFailed(String err) {
+                                Toast.makeText(context, "Failed to update", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                        break;
+                }
             }
         });
-
-        return v;
     }
 
     public static void clearFields() {
         clearParentFields();
-        mSource.setText("");
-        mDestination.setText("");
-        mArrivalTime.setText("");
+        sSource.setText("");
+        sDestination.setText("");
+        sArrivalTime.setText("");
     }
 
     public String getSource() {

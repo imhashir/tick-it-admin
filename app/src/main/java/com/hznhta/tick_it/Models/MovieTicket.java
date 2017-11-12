@@ -1,6 +1,7 @@
 package com.hznhta.tick_it.Models;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,12 +13,14 @@ import com.hznhta.tick_it.R;
 
 public class MovieTicket extends Ticket {
 
+    private static final String TAG = "MovieTicket";
+
     private String genre;
     private int length;
 
-    private static EditText mMovieGenre;
-    private static EditText mMovieLength;
-    private static Button mAddButton;
+    private static EditText sMovieGenre;
+    private static EditText sMovieLength;
+    private static Button sAddButton;
 
     public MovieTicket() {
         super();
@@ -31,14 +34,25 @@ public class MovieTicket extends Ticket {
         this.length = length;
     }
 
+    public static void populateTicket(MovieTicket ticket) {
+        populateTicketView(ticket);
+        sMovieGenre.setText(ticket.getGenre() + "");
+        sMovieLength.setText(ticket.getLength() + "");
+        sAddButton.setText("Update");
+    }
+
     public static View getView(final Context context) {
         View v = getTicketView(context, MOVIE_TICKET);
 
-        mMovieGenre = v.findViewById(R.id.id_input_genre);
-        mMovieLength = v.findViewById(R.id.id_input_length);
-        mAddButton = v.findViewById(R.id.id_add_ticket_button);
+        sMovieGenre = v.findViewById(R.id.id_input_genre);
+        sMovieLength = v.findViewById(R.id.id_input_length);
+        sAddButton = v.findViewById(R.id.id_add_ticket_button);
 
-        mAddButton.setOnClickListener(new View.OnClickListener() {
+        return v;
+    }
+
+    public static void setButtonAction(final Context context, final String uid, final int action) {
+        sAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 MovieTicket ticket = new MovieTicket(
@@ -47,30 +61,48 @@ public class MovieTicket extends Ticket {
                         Integer.parseInt(sTicketSeats.getText().toString()),
                         sTicketPlace.getText().toString(),
                         sTicketDate.getText().toString(),
-                        mMovieGenre.getText().toString(),
-                        Integer.parseInt(mMovieLength.getText().toString()));
-                TicketController.newInstance().addNewTicket(ticket, MOVIE_TICKET, new OnActionCompletedListener() {
-                    @Override
-                    public void onActionSucceed() {
-                        Toast.makeText(context, "Ticket added!", Toast.LENGTH_LONG).show();
-                        clearFields();
-                    }
+                        sMovieGenre.getText().toString(),
+                        Integer.parseInt(sMovieLength.getText().toString()));
+                ticket.setUid(uid);
+                switch (action) {
+                    case BUTTON_ADD:
+                        TicketController.newInstance().addNewTicket(ticket, MOVIE_TICKET, new OnActionCompletedListener() {
+                            @Override
+                            public void onActionSucceed() {
+                                Toast.makeText(context, "Ticket added!", Toast.LENGTH_LONG).show();
+                                clearFields();
+                            }
 
-                    @Override
-                    public void onActionFailed(String err) {
-                        Toast.makeText(context, "", Toast.LENGTH_LONG).show();
-                    }
-                });
+                            @Override
+                            public void onActionFailed(String err) {
+                                Log.wtf(TAG, err);
+                                Toast.makeText(context, "Operation failed", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                        break;
+                    case BUTTON_UPDATE:
+                        TicketController.newInstance().updateTicket(ticket, MOVIE_TICKET, new OnActionCompletedListener() {
+                            @Override
+                            public void onActionSucceed() {
+                                Toast.makeText(context, "Ticket updated!", Toast.LENGTH_LONG).show();
+                            }
+
+                            @Override
+                            public void onActionFailed(String err) {
+                                Log.wtf(TAG, err);
+                                Toast.makeText(context, "Update failed!", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                        break;
+                }
             }
         });
-
-        return v;
     }
 
     public static void clearFields() {
         clearParentFields();
-        mMovieGenre.setText("");
-        mMovieLength.setText("");
+        sMovieGenre.setText("");
+        sMovieLength.setText("");
     }
 
     public String getGenre() {

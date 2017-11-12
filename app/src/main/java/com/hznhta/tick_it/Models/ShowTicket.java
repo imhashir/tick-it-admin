@@ -21,8 +21,8 @@ public class ShowTicket extends Ticket {
         this.endingTime = null;
     }
 
-    public ShowTicket(int type, String name, int price, int seats, String place, String dateTime, String endingTime) {
-        super(type, name, price, seats, place, dateTime);
+    public ShowTicket(String name, int price, int seats, String place, String dateTime, String endingTime) {
+        super(name, price, seats, place, dateTime);
         this.endingTime = endingTime;
     }
 
@@ -36,17 +36,17 @@ public class ShowTicket extends Ticket {
             @Override
             public void onClick(View view) {
                 ShowTicket ticket = new ShowTicket(
-                        Ticket.MOVIE_TICKET,
                         sTicketName.getText().toString(),
                         Integer.parseInt(sTicketPrice.getText().toString()),
                         Integer.parseInt(sTicketSeats.getText().toString()),
                         sTicketPlace.getText().toString(),
                         sTicketDate.getText().toString(),
                         mEndingTime.getText().toString());
-                TicketController.newInstance().addNewTicket(ticket, new OnActionCompletedListener() {
+                TicketController.newInstance().addNewTicket(ticket, SHOW_TICKET, new OnActionCompletedListener() {
                     @Override
                     public void onActionSucceed() {
                         Toast.makeText(context, "Ticket added!", Toast.LENGTH_LONG).show();
+                        clearFields();
                     }
 
                     @Override
@@ -58,6 +58,11 @@ public class ShowTicket extends Ticket {
         });
 
         return v;
+    }
+
+    public static void clearFields() {
+        clearParentFields();
+        mEndingTime.setText("");
     }
 
     public String getEndingTime() {

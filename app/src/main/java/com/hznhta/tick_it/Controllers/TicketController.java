@@ -10,15 +10,18 @@ import com.hznhta.tick_it.Models.Ticket;
 
 public class TicketController {
 
+    private static final String[] types = {"movie", "show", "transport", "sports"};
+
     public static TicketController newInstance() {
         return new TicketController();
     }
 
     private OnActionCompletedListener mOnActionCompletedListener;
 
-    public void addNewTicket(Ticket ticket, OnActionCompletedListener listener) {
+    public void addNewTicket(Ticket ticket, int type, OnActionCompletedListener listener) {
         mOnActionCompletedListener = listener;
-        FirebaseDatabase.getInstance().getReference("tickets").push().setValue(ticket).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+        FirebaseDatabase.getInstance().getReference("tickets").child(types[type]).push().setValue(ticket).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()) {

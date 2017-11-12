@@ -26,8 +26,8 @@ public class TransportTicket extends Ticket {
         source = destination = arrivalTime = null;
     }
 
-    public TransportTicket(int type, String name, int price, int seats, String place, String dateTime, String source, String destination, String arrivalTime) {
-        super(type, name, price, seats, place, dateTime);
+    public TransportTicket(String name, int price, int seats, String place, String dateTime, String source, String destination, String arrivalTime) {
+        super(name, price, seats, place, dateTime);
         this.source = source;
         this.destination = destination;
         this.arrivalTime = arrivalTime;
@@ -45,7 +45,6 @@ public class TransportTicket extends Ticket {
             @Override
             public void onClick(View view) {
                 TransportTicket ticket = new TransportTicket(
-                        Ticket.MOVIE_TICKET,
                         sTicketName.getText().toString(),
                         Integer.parseInt(sTicketPrice.getText().toString()),
                         Integer.parseInt(sTicketSeats.getText().toString()),
@@ -54,10 +53,11 @@ public class TransportTicket extends Ticket {
                         mSource.getText().toString(),
                         mDestination.getText().toString(),
                         mArrivalTime.getText().toString());
-                TicketController.newInstance().addNewTicket(ticket, new OnActionCompletedListener() {
+                TicketController.newInstance().addNewTicket(ticket, TRANSPORT_TICKET, new OnActionCompletedListener() {
                     @Override
                     public void onActionSucceed() {
                         Toast.makeText(context, "Ticket added!", Toast.LENGTH_LONG).show();
+                        clearFields();
                     }
 
                     @Override
@@ -69,6 +69,13 @@ public class TransportTicket extends Ticket {
         });
 
         return v;
+    }
+
+    public static void clearFields() {
+        clearParentFields();
+        mSource.setText("");
+        mDestination.setText("");
+        mArrivalTime.setText("");
     }
 
     public String getSource() {

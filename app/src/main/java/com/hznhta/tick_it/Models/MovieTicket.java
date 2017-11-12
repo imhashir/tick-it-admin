@@ -25,8 +25,8 @@ public class MovieTicket extends Ticket {
         length = 0;
     }
 
-    public MovieTicket(int type, String name, int price, int seats, String place, String dateTime, String genre, int length) {
-        super(type, name, price, seats, place, dateTime);
+    public MovieTicket(String name, int price, int seats, String place, String dateTime, String genre, int length) {
+        super(name, price, seats, place, dateTime);
         this.genre = genre;
         this.length = length;
     }
@@ -42,7 +42,6 @@ public class MovieTicket extends Ticket {
             @Override
             public void onClick(View view) {
                 MovieTicket ticket = new MovieTicket(
-                        Ticket.MOVIE_TICKET,
                         sTicketName.getText().toString(),
                         Integer.parseInt(sTicketPrice.getText().toString()),
                         Integer.parseInt(sTicketSeats.getText().toString()),
@@ -50,10 +49,11 @@ public class MovieTicket extends Ticket {
                         sTicketDate.getText().toString(),
                         mMovieGenre.getText().toString(),
                         Integer.parseInt(mMovieLength.getText().toString()));
-                TicketController.newInstance().addNewTicket(ticket, new OnActionCompletedListener() {
+                TicketController.newInstance().addNewTicket(ticket, MOVIE_TICKET, new OnActionCompletedListener() {
                     @Override
                     public void onActionSucceed() {
                         Toast.makeText(context, "Ticket added!", Toast.LENGTH_LONG).show();
+                        clearFields();
                     }
 
                     @Override
@@ -65,6 +65,12 @@ public class MovieTicket extends Ticket {
         });
 
         return v;
+    }
+
+    public static void clearFields() {
+        clearParentFields();
+        mMovieGenre.setText("");
+        mMovieLength.setText("");
     }
 
     public String getGenre() {

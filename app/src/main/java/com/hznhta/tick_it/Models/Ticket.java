@@ -9,12 +9,11 @@ import com.hznhta.tick_it.R;
 
 public abstract class Ticket {
 
-    public final static int MOVIE_TICKET = 2001;
-    public final static int SHOW_TICKET = 2002;
-    public final static int TRANSPORT_TICKET = 2003;
-    public final static int SPORTS_TICKET = 2004;
+    public final static int MOVIE_TICKET = 0;
+    public final static int SHOW_TICKET = 1;
+    public final static int TRANSPORT_TICKET = 2;
+    public final static int SPORTS_TICKET = 3;
 
-    private int type;
     private String name;
     private int price;
     private int seats;
@@ -28,7 +27,6 @@ public abstract class Ticket {
     protected static EditText sTicketDate;
 
     public Ticket() {
-        this.type = 0;
         this.name = null;
         this.price = 0;
         this.seats = 0;
@@ -36,8 +34,7 @@ public abstract class Ticket {
         this.dateTime = null;
     }
 
-    public Ticket(int type, String name, int price, int seats, String place, String dateTime) {
-        this.type = type;
+    public Ticket(String name, int price, int seats, String place, String dateTime) {
         this.name = name;
         this.price = price;
         this.seats = seats;
@@ -68,6 +65,14 @@ public abstract class Ticket {
         sTicketPrice = v.findViewById(R.id.id_input_price);
         sTicketSeats = v.findViewById(R.id.id_input_seats);
         return v;
+    }
+
+    public static void clearParentFields() {
+        sTicketName.setText("");
+        sTicketDate.setText("");
+        sTicketPlace.setText("");
+        sTicketPrice.setText("");
+        sTicketSeats.setText("");
     }
 
     public String getName() {

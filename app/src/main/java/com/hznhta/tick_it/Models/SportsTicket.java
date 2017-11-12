@@ -10,10 +10,6 @@ import com.hznhta.tick_it.Controllers.TicketController;
 import com.hznhta.tick_it.Interfaces.OnActionCompletedListener;
 import com.hznhta.tick_it.R;
 
-/**
- * Created by imhashir on 11/12/17.
- */
-
 public class SportsTicket extends Ticket {
 
     private String team1;
@@ -28,8 +24,8 @@ public class SportsTicket extends Ticket {
         team1 = team2 = null;
     }
 
-    public SportsTicket(int type, String name, int price, int seats, String place, String dateTime, String team1, String team2) {
-        super(type, name, price, seats, place, dateTime);
+    public SportsTicket(String name, int price, int seats, String place, String dateTime, String team1, String team2) {
+        super(name, price, seats, place, dateTime);
         this.team1 = team1;
         this.team2 = team2;
     }
@@ -45,7 +41,6 @@ public class SportsTicket extends Ticket {
             @Override
             public void onClick(View view) {
                 SportsTicket ticket = new SportsTicket(
-                        Ticket.MOVIE_TICKET,
                         sTicketName.getText().toString(),
                         Integer.parseInt(sTicketPrice.getText().toString()),
                         Integer.parseInt(sTicketSeats.getText().toString()),
@@ -53,10 +48,11 @@ public class SportsTicket extends Ticket {
                         sTicketDate.getText().toString(),
                         mNameTeam1.getText().toString(),
                         mNameTeam2.getText().toString());
-                TicketController.newInstance().addNewTicket(ticket, new OnActionCompletedListener() {
+                TicketController.newInstance().addNewTicket(ticket, SPORTS_TICKET, new OnActionCompletedListener() {
                     @Override
                     public void onActionSucceed() {
                         Toast.makeText(context, "Ticket added!", Toast.LENGTH_LONG).show();
+                        clearFields();
                     }
 
                     @Override
@@ -68,6 +64,12 @@ public class SportsTicket extends Ticket {
         });
 
         return v;
+    }
+
+    public static void clearFields() {
+        clearParentFields();
+        mNameTeam2.setText("");
+        mNameTeam1.setText("");
     }
 
     public String getTeam1() {

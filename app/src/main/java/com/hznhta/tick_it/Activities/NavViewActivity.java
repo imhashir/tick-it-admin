@@ -13,6 +13,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.hznhta.tick_it.Fragments.AddTicketFragment;
 import com.hznhta.tick_it.Fragments.HomeFragment;
 import com.hznhta.tick_it.R;
 
@@ -81,7 +82,7 @@ public class NavViewActivity extends BaseActivity implements NavigationView.OnNa
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         chooseNavItem(item.getItemId());
-        return false;
+        return true;
     }
 
     public void chooseNavItem(int id) {
@@ -90,6 +91,7 @@ public class NavViewActivity extends BaseActivity implements NavigationView.OnNa
                 setFragmentView(HomeFragment.newInstance());
                 break;
             case R.id.menu_add_ticket:
+                setFragmentView(AddTicketFragment.newInstance());
                 break;
             case R.id.menu_manage_tickets:
                 break;

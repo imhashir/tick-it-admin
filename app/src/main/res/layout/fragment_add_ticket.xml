@@ -18,7 +18,7 @@
         android:layout_marginLeft="8dp"/>
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/id_ticket_chooser_spinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -33,7 +33,7 @@
 
     <FrameLayout
         android:id="@+id/ticket_fragment_container"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -42,6 +42,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner"/>
+        app:layout_constraintTop_toBottomOf="@+id/id_ticket_chooser_spinner"/>
 
 </android.support.constraint.ConstraintLayout>

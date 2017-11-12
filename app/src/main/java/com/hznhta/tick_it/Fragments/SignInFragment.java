@@ -14,6 +14,7 @@ import android.widget.EditText;
 
 import com.hznhta.tick_it.Activities.NavViewActivity;
 import com.hznhta.tick_it.Controllers.AccountsController;
+import com.hznhta.tick_it.Interfaces.OnActionCompletedListener;
 import com.hznhta.tick_it.R;
 
 import butterknife.BindView;
@@ -42,7 +43,7 @@ public class SignInFragment extends Fragment {
         mSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AccountsController.newInstance().signInAdmin(mEmailInput.getText().toString(), mPasswordInput.getText().toString(), new AccountsController.OnActionCompletedListener() {
+                AccountsController.newInstance().signInAdmin(mEmailInput.getText().toString(), mPasswordInput.getText().toString(), new OnActionCompletedListener() {
                     @Override
                     public void onActionSucceed() {
                         Log.i(TAG, "Signed In!");

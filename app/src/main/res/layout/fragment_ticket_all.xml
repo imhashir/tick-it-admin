@@ -7,20 +7,21 @@
     android:layout_gravity="center">
 
     <TextView
-        android:id="@+id/id_text_end_time"
+        android:id="@+id/id_text_name"
         style="@style/TextStyle"
         android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         android:text="Name"
-        app:layout_constraintBottom_toBottomOf="@+id/id_input_end_time"
-        app:layout_constraintEnd_toStartOf="@+id/id_input_end_time"
-        app:layout_constraintTop_toTopOf="@+id/id_input_end_time"
+        app:layout_constraintBottom_toBottomOf="@+id/id_input_name"
+        app:layout_constraintEnd_toStartOf="@+id/id_input_name"
+        app:layout_constraintTop_toTopOf="@+id/id_input_name"
         android:layout_marginRight="8dp"/>
 
     <EditText
-        android:id="@+id/id_input_end_time"
+        android:id="@+id/id_input_name"
         android:textAppearance="@style/TicketInputStyle"
         android:layout_height="wrap_content"
         android:layout_width="200dp"
@@ -31,7 +32,7 @@
         android:layout_marginRight="8dp"/>
 
     <TextView
-        android:id="@+id/id_text_dest"
+        android:id="@+id/id_text_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -39,21 +40,22 @@
         android:layout_marginTop="8dp"
         style="@style/TextStyle"
         android:text="Price"
-        app:layout_constraintBottom_toBottomOf="@+id/id_input_dest"
-        app:layout_constraintEnd_toStartOf="@+id/id_input_dest"
-        app:layout_constraintTop_toTopOf="@+id/id_input_dest"
+        app:layout_constraintBottom_toBottomOf="@+id/id_input_price"
+        app:layout_constraintEnd_toStartOf="@+id/id_input_price"
+        app:layout_constraintTop_toTopOf="@+id/id_input_price"
         android:layout_marginRight="8dp"/>
 
     <EditText
-        android:id="@+id/id_input_dest"
+        android:id="@+id/id_input_price"
         style="@style/TicketInputStyle"
         android:layout_height="wrap_content"
+        android:layout_width="200dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         android:hint="Price"
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/id_input_end_time"
+        app:layout_constraintTop_toBottomOf="@+id/id_input_name"
         android:layout_marginRight="8dp"/>
 
     <TextView
@@ -80,7 +82,7 @@
         android:hint="Seats"
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/id_input_dest"
+        app:layout_constraintTop_toBottomOf="@+id/id_input_price"
         android:layout_marginRight="8dp"/>
 
     <TextView
@@ -118,7 +120,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
-        android:hint="Seats"
+        android:hint="Place"
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/id_input_seats"
@@ -131,7 +133,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
-        android:hint="Seats"
+        android:hint="Date Time"
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/id_input_place"

@@ -13,6 +13,7 @@ import android.widget.EditText;
 
 import com.hznhta.tick_it.Activities.NavViewActivity;
 import com.hznhta.tick_it.Controllers.AccountsController;
+import com.hznhta.tick_it.Interfaces.OnActionCompletedListener;
 import com.hznhta.tick_it.R;
 
 import butterknife.BindView;
@@ -46,7 +47,7 @@ public class AddAdminFragment extends Fragment {
                         mAdminEmail.getText().toString(),
                         mAdminPassword.getText().toString(),
                         mAdminAddress.getText().toString(),
-                        new AccountsController.OnActionCompletedListener() {
+                        new OnActionCompletedListener() {
                             @Override
                             public void onActionSucceed() {
                                 Log.i(TAG, "Account Created successfully");

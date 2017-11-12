@@ -42,22 +42,24 @@
                 app:layout_constraintTop_toBottomOf="@id/include"/>
 
             <TextView
-                android:id="@+id/id_text_end_time"
+                android:id="@+id/id_text_team1"
                 style="@style/TextStyle"
                 android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"
                 android:text="Team 1"
-                app:layout_constraintBottom_toBottomOf="@+id/id_input_end_time"
-                app:layout_constraintEnd_toStartOf="@+id/id_input_end_time"
-                app:layout_constraintTop_toTopOf="@+id/id_input_end_time"
+                app:layout_constraintBottom_toBottomOf="@+id/id_input_team1"
+                app:layout_constraintEnd_toStartOf="@+id/id_input_team1"
+                app:layout_constraintTop_toTopOf="@+id/id_input_team1"
                 android:layout_marginRight="8dp"/>
 
             <EditText
-                android:id="@+id/id_input_end_time"
+                android:id="@+id/id_input_team1"
                 style="@style/TicketInputStyle"
                 android:layout_height="wrap_content"
+                android:layout_width="200dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"
                 android:hint="Team 1 Name"
@@ -66,7 +68,7 @@
                 android:layout_marginRight="8dp"/>
 
             <TextView
-                android:id="@+id/id_text_dest"
+                android:id="@+id/id_text_team2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -74,33 +76,35 @@
                 android:layout_marginTop="8dp"
                 style="@style/TextStyle"
                 android:text="Team 2"
-                app:layout_constraintBottom_toBottomOf="@+id/id_input_dest"
-                app:layout_constraintEnd_toStartOf="@+id/id_input_dest"
-                app:layout_constraintTop_toTopOf="@+id/id_input_dest"
+                app:layout_constraintBottom_toBottomOf="@+id/id_input_team2"
+                app:layout_constraintEnd_toStartOf="@+id/id_input_team2"
+                app:layout_constraintTop_toTopOf="@+id/id_input_team2"
                 android:layout_marginRight="8dp"/>
 
             <EditText
-                android:id="@+id/id_input_dest"
+                android:id="@+id/id_input_team2"
                 style="@style/TicketInputStyle"
                 android:layout_height="wrap_content"
+                android:layout_width="200dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"
                 android:hint="Team 2 Name"
                 app:layout_constraintEnd_toEndOf="@+id/include"
-                app:layout_constraintTop_toBottomOf="@+id/id_input_end_time"
+                app:layout_constraintTop_toBottomOf="@+id/id_input_team1"
                 android:layout_marginRight="8dp"/>
 
             <Button
                 style="@style/ButtonStyleGreen"
                 android:layout_width="wrap_content"
-                android:layout_height="44dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/id_add_ticket_button"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="Add"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/id_input_dest"/>
+                app:layout_constraintTop_toBottomOf="@id/id_input_team2"/>
 
         </android.support.constraint.ConstraintLayout>
     </LinearLayout>

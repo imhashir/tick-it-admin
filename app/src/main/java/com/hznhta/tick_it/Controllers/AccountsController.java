@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hznhta.tick_it.Interfaces.OnActionCompletedListener;
 import com.hznhta.tick_it.Models.User;
 
 public class AccountsController {
@@ -19,11 +20,6 @@ public class AccountsController {
 
     public static AccountsController newInstance() {
         return new AccountsController();
-    }
-
-    public interface OnActionCompletedListener {
-        void onActionSucceed();
-        void onActionFailed(String err);
     }
 
     public void signInAdmin(String email, String password, OnActionCompletedListener listener) {
@@ -60,7 +56,7 @@ public class AccountsController {
                 });
     }
 
-    public void createNewAdmin(final String name, final String email, String password, final String address, final OnActionCompletedListener listener) {
+    public void createNewAdmin(final String name, final String email, String password, final String address, OnActionCompletedListener listener) {
         mOnActionCompletedListener = listener;
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -73,20 +69,28 @@ public class AccountsController {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()) {
-                                listener.onActionSucceed();
+                                FirebaseDatabase.getInstance().getReference("admins")
+                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                        .setValue("true")
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                mOnActionCompletedListener.onActionSucceed();
+                                            }
+                                        });
                             } else {
                                 FirebaseAuth.getInstance().getCurrentUser().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         FirebaseAuth.getInstance().signOut();
-                                        listener.onActionFailed(task.getException().toString());
+                                        mOnActionCompletedListener.onActionFailed(task.getException().toString());
                                     }
                                 });
                             }
                         }
                     });
                 } else {
-                    listener.onActionFailed(task.getException().toString());
+                    mOnActionCompletedListener.onActionFailed(task.getException().toString());
                 }
             }
         });

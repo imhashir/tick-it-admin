@@ -81,6 +81,13 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        mAddTicketButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityWithFragment(R.id.menu_add_ticket);
+            }
+        });
+
         return v;
     }
 

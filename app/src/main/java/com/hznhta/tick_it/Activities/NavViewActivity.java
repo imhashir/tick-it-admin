@@ -14,6 +14,7 @@ import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.hznhta.tick_it.Fragments.AddTicketFragment;
+import com.hznhta.tick_it.Fragments.ChooseCategoryFragment;
 import com.hznhta.tick_it.Fragments.HomeFragment;
 import com.hznhta.tick_it.R;
 
@@ -94,6 +95,7 @@ public class NavViewActivity extends BaseActivity implements NavigationView.OnNa
                 setFragmentView(AddTicketFragment.newInstance());
                 break;
             case R.id.menu_manage_tickets:
+                setFragmentView(ChooseCategoryFragment.newInstance());
                 break;
             case R.id.menu_add_admin:
                 AlertDialog.Builder dialog = new AlertDialog.Builder(this);

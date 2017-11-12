@@ -14,6 +14,7 @@ public abstract class Ticket {
     public final static int TRANSPORT_TICKET = 2;
     public final static int SPORTS_TICKET = 3;
 
+    private String uid;
     private String name;
     private int price;
     private int seats;
@@ -73,6 +74,14 @@ public abstract class Ticket {
         sTicketPlace.setText("");
         sTicketPrice.setText("");
         sTicketSeats.setText("");
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getName() {

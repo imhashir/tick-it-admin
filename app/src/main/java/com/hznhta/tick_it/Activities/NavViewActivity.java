@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.view.MenuItem;
 
@@ -27,6 +28,7 @@ public class NavViewActivity extends BaseActivity implements NavigationView.OnNa
     private Fragment mFragment;
     private Context mContext;
     @BindView(R.id.id_nav_view) NavigationView mNavigationView;
+    @BindView(R.id.id_nav_drawer) DrawerLayout mDrawerLayout;
 
     private static final String FRAGMENT_EXTRA = "NavViewActivity.Fragment";
 
@@ -121,5 +123,6 @@ public class NavViewActivity extends BaseActivity implements NavigationView.OnNa
             default:
                 setFragmentView(HomeFragment.newInstance());
         }
+        mDrawerLayout.closeDrawers();
     }
 }

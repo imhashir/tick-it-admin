@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.hznhta.tick_it.Fragments.AddTicketFragment;
 import com.hznhta.tick_it.Fragments.ChooseCategoryFragment;
 import com.hznhta.tick_it.Fragments.HomeFragment;
+import com.hznhta.tick_it.Fragments.RequestsListFragment;
 import com.hznhta.tick_it.R;
 
 import butterknife.BindView;
@@ -119,6 +120,7 @@ public class NavViewActivity extends BaseActivity implements NavigationView.OnNa
                 dialog.show();
                 break;
             case R.id.menu_credit_reqs:
+                setFragmentView(RequestsListFragment.newInstance());
                 break;
             default:
                 setFragmentView(HomeFragment.newInstance());

@@ -1,6 +1,7 @@
 package com.hznhta.tick_it.Controllers;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -16,7 +17,21 @@ import com.hznhta.tick_it.Models.User;
 
 public class AccountsController {
 
+    private OnRequestsFetchedListener mOnRequestsFetchedListener;
     private OnActionCompletedListener mOnActionCompletedListener;
+
+    private FirebaseDatabase mDatabase;
+
+    private static final String TAG = "AccountsController";
+
+    public AccountsController() {
+        mDatabase = FirebaseDatabase.getInstance();
+    }
+
+    public interface OnRequestsFetchedListener {
+        void onRequestFetched(String userId, String username, Long amount);
+        void onNoRequestFound();
+    }
 
     public static AccountsController newInstance() {
         return new AccountsController();
@@ -54,6 +69,72 @@ public class AccountsController {
                         }
                     }
                 });
+    }
+
+    public void fetchCreditRequests(OnRequestsFetchedListener listener) {
+        mOnRequestsFetchedListener = listener;
+        mDatabase.getReference("userCreditList").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(final DataSnapshot creditDataSnapshot) {
+                for(final DataSnapshot snapshot : creditDataSnapshot.getChildren()) {
+                    mDatabase.getReference("users").child(snapshot.getKey()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot nameDataSnapshot) {
+                            mOnRequestsFetchedListener.onRequestFetched(snapshot.getKey(), nameDataSnapshot.getValue().toString(), (Long) snapshot.getValue());
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        mDatabase.getReference("userCreditList").orderByKey().limitToFirst(1).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getChildrenCount() == 0) {
+                    mOnRequestsFetchedListener.onNoRequestFound();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void handleCreditRequest(final String userId, final Long amount, final boolean action, OnActionCompletedListener listener) {
+        mOnActionCompletedListener = listener;
+        mDatabase.getReference("userCreditList").child(userId).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()) {
+                    if (action) {
+                        mDatabase.getReference("userCreditAccounts").child(userId).setValue(amount).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()) {
+                                    mOnActionCompletedListener.onActionSucceed();
+                                }
+                            }
+                        });
+                    } else {
+                        mOnActionCompletedListener.onActionSucceed();
+                    }
+                } else {
+                    mOnActionCompletedListener.onActionFailed("Unable to complete task.");
+                    Log.wtf(TAG, task.getException());
+                }
+            }
+        });
     }
 
     public void createNewAdmin(final String name, final String email, String password, final String address, OnActionCompletedListener listener) {

@@ -16,4 +16,7 @@
     <item android:id="@+id/menu_credit_reqs"
           android:title="View Credit Requests"/>
 
+    <item android:id="@+id/menu_sign_out"
+          android:title="Sign Out"/>
+
 </menu>

@@ -44,6 +44,7 @@ public class NavViewActivity extends BaseActivity implements NavigationView.OnNa
         super.onResume();
         if(FirebaseAuth.getInstance().getCurrentUser() == null) {
             startActivity(SignInActivity.newIntent(this));
+            finish();
         }
     }
 
@@ -121,6 +122,11 @@ public class NavViewActivity extends BaseActivity implements NavigationView.OnNa
                 break;
             case R.id.menu_credit_reqs:
                 setFragmentView(RequestsListFragment.newInstance());
+                break;
+            case R.id.menu_sign_out:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(NavViewActivity.newIntent(this, null));
+                finish();
                 break;
             default:
                 setFragmentView(HomeFragment.newInstance());

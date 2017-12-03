@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ public class TicketListFragment extends Fragment {
     private static final String TAG = "TicketListFragment";
 
     @BindView(R.id.id_recycler_view) RecyclerView mRecyclerView;
+    @BindView(R.id.id_progress_bar) ProgressBar mProgressBar;
 
     private TicketAdapter mAdapter;
 
@@ -61,14 +63,27 @@ public class TicketListFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
 
+        return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(mAdapter != null && mAdapter.mTicketList != null)
+            mAdapter.mTicketList.clear();
         TicketController.newInstance().getTicketsList(mType, new TicketController.OnTicketsRetrievedListener() {
             @Override
             public void onTicketsRetrieved(Ticket ticket) {
                 mAdapter.addTicket(ticket);
                 mAdapter.notifyDataSetChanged();
+                mProgressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onNoTicketsRetrieved() {
+                mProgressBar.setVisibility(View.GONE);
             }
         });
-        return v;
     }
 
     private class TicketAdapter extends RecyclerView.Adapter<TicketHolder> {

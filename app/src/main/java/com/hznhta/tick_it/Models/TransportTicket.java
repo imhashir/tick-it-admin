@@ -1,10 +1,12 @@
 package com.hznhta.tick_it.Models;
 
 import android.content.Context;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.hznhta.tick_it.Controllers.TicketController;
@@ -24,6 +26,8 @@ public class TransportTicket extends Ticket {
     private static EditText sArrivalTime;
     private static Button sAddButton;
 
+    private static AlertDialog mAddProgressDialog;
+
     public TransportTicket() {
         super();
         source = destination = arrivalTime = null;
@@ -38,6 +42,7 @@ public class TransportTicket extends Ticket {
 
     public static void populateTicket(TransportTicket ticket) {
         populateTicketView(ticket);
+        mAddProgressDialog.setTitle("Updating Ticket...");
         sSource.setText(ticket.getSource() + "");
         sDestination.setText(ticket.getDestination() + "");
         sArrivalTime.setText(ticket.getArrivalTime() + "");
@@ -46,6 +51,9 @@ public class TransportTicket extends Ticket {
 
     public static View getView(final Context context) {
         View v = getTicketView(context, TRANSPORT_TICKET);
+
+        mAddProgressDialog = new AlertDialog.Builder(context)
+                .setView(new ProgressBar(context)).setTitle("Adding Ticket...").create();
 
         sSource = v.findViewById(R.id.id_input_source);
         sDestination = v.findViewById(R.id.id_input_dest);
@@ -59,6 +67,7 @@ public class TransportTicket extends Ticket {
         sAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mAddProgressDialog.show();
                 TransportTicket ticket = new TransportTicket(
                         sTicketName.getText().toString(),
                         Integer.parseInt(sTicketPrice.getText().toString()),
@@ -76,12 +85,14 @@ public class TransportTicket extends Ticket {
                         TicketController.newInstance().addNewTicket(ticket, TRANSPORT_TICKET, new OnActionCompletedListener() {
                             @Override
                             public void onActionSucceed() {
+                                mAddProgressDialog.dismiss();
                                 Toast.makeText(context, "Ticket added!", Toast.LENGTH_LONG).show();
                                 clearFields();
                             }
 
                             @Override
                             public void onActionFailed(String err) {
+                                mAddProgressDialog.dismiss();
                                 Log.wtf(TAG, err);
                                 Toast.makeText(context, "Failed to add ticket!", Toast.LENGTH_LONG).show();
                             }
@@ -91,11 +102,13 @@ public class TransportTicket extends Ticket {
                         TicketController.newInstance().updateTicket(ticket, TRANSPORT_TICKET, new OnActionCompletedListener() {
                             @Override
                             public void onActionSucceed() {
+                                mAddProgressDialog.dismiss();
                                 Toast.makeText(context, "Ticket Updated!", Toast.LENGTH_LONG).show();
                             }
 
                             @Override
                             public void onActionFailed(String err) {
+                                mAddProgressDialog.dismiss();
                                 Toast.makeText(context, "Failed to update", Toast.LENGTH_LONG).show();
                             }
                         });

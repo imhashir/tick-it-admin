@@ -1,10 +1,12 @@
 package com.hznhta.tick_it.Models;
 
 import android.content.Context;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.hznhta.tick_it.Controllers.TicketController;
@@ -17,6 +19,8 @@ public class MovieTicket extends Ticket {
 
     private String genre;
     private int length;
+
+    private static AlertDialog mAddProgressDialog;
 
     private static EditText sMovieGenre;
     private static EditText sMovieLength;
@@ -38,11 +42,15 @@ public class MovieTicket extends Ticket {
         populateTicketView(ticket);
         sMovieGenre.setText(ticket.getGenre() + "");
         sMovieLength.setText(ticket.getLength() + "");
+        mAddProgressDialog.setTitle("Updating Ticket...");
         sAddButton.setText("Update");
     }
 
     public static View getView(final Context context) {
         View v = getTicketView(context, MOVIE_TICKET);
+
+        mAddProgressDialog = new AlertDialog.Builder(context)
+                .setView(new ProgressBar(context)).setTitle("Adding Ticket...").create();
 
         sMovieGenre = v.findViewById(R.id.id_input_genre);
         sMovieLength = v.findViewById(R.id.id_input_length);
@@ -55,6 +63,7 @@ public class MovieTicket extends Ticket {
         sAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mAddProgressDialog.show();
                 MovieTicket ticket = new MovieTicket(
                         sTicketName.getText().toString(),
                         Integer.parseInt(sTicketPrice.getText().toString()),
@@ -69,12 +78,14 @@ public class MovieTicket extends Ticket {
                         TicketController.newInstance().addNewTicket(ticket, MOVIE_TICKET, new OnActionCompletedListener() {
                             @Override
                             public void onActionSucceed() {
+                                mAddProgressDialog.dismiss();
                                 Toast.makeText(context, "Ticket added!", Toast.LENGTH_LONG).show();
                                 clearFields();
                             }
 
                             @Override
                             public void onActionFailed(String err) {
+                                mAddProgressDialog.dismiss();
                                 Log.wtf(TAG, err);
                                 Toast.makeText(context, "Operation failed", Toast.LENGTH_LONG).show();
                             }
@@ -84,11 +95,13 @@ public class MovieTicket extends Ticket {
                         TicketController.newInstance().updateTicket(ticket, MOVIE_TICKET, new OnActionCompletedListener() {
                             @Override
                             public void onActionSucceed() {
+                                mAddProgressDialog.dismiss();
                                 Toast.makeText(context, "Ticket updated!", Toast.LENGTH_LONG).show();
                             }
 
                             @Override
                             public void onActionFailed(String err) {
+                                mAddProgressDialog.dismiss();
                                 Log.wtf(TAG, err);
                                 Toast.makeText(context, "Update failed!", Toast.LENGTH_LONG).show();
                             }

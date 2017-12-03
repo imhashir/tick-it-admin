@@ -1,10 +1,12 @@
 package com.hznhta.tick_it.Models;
 
 import android.content.Context;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.hznhta.tick_it.Controllers.TicketController;
@@ -19,6 +21,8 @@ public class SportsTicket extends Ticket {
     private static EditText sNameTeam1;
     private static EditText sNameTeam2;
     private static Button sAddButton;
+
+    private static AlertDialog mAddProgressDialog;
 
     private static final String TAG = "SportsTicket";
 
@@ -35,6 +39,7 @@ public class SportsTicket extends Ticket {
 
     public static void populateTicket(SportsTicket ticket) {
         populateTicketView(ticket);
+        mAddProgressDialog.setTitle("Updating Ticket...");
         sNameTeam1.setText(ticket.getTeam1() + "");
         sNameTeam2.setText(ticket.getTeam2() + "");
         sAddButton.setText("Update");
@@ -42,6 +47,9 @@ public class SportsTicket extends Ticket {
 
     public static View getView(final Context context) {
         View v = getTicketView(context, SPORTS_TICKET);
+
+        mAddProgressDialog = new AlertDialog.Builder(context)
+                .setView(new ProgressBar(context)).setTitle("Adding Ticket...").create();
 
         sNameTeam1 = v.findViewById(R.id.id_input_team1);
         sNameTeam2 = v.findViewById(R.id.id_input_team2);
@@ -54,6 +62,7 @@ public class SportsTicket extends Ticket {
         sAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mAddProgressDialog.show();
                 SportsTicket ticket = new SportsTicket(
                         sTicketName.getText().toString(),
                         Integer.parseInt(sTicketPrice.getText().toString()),
@@ -70,12 +79,14 @@ public class SportsTicket extends Ticket {
                         TicketController.newInstance().addNewTicket(ticket, SPORTS_TICKET, new OnActionCompletedListener() {
                             @Override
                             public void onActionSucceed() {
+                                mAddProgressDialog.dismiss();
                                 Toast.makeText(context, "Ticket added!", Toast.LENGTH_LONG).show();
                             }
 
                             @Override
                             public void onActionFailed(String err) {
-                                Toast.makeText(context, "", Toast.LENGTH_LONG).show();
+                                mAddProgressDialog.dismiss();
+                                Toast.makeText(context, "Unable to Add Ticket", Toast.LENGTH_LONG).show();
                             }
                         });
                         break;
@@ -83,11 +94,13 @@ public class SportsTicket extends Ticket {
                         TicketController.newInstance().updateTicket(ticket, SPORTS_TICKET, new OnActionCompletedListener() {
                             @Override
                             public void onActionSucceed() {
+                                mAddProgressDialog.dismiss();
                                 Toast.makeText(context, "Ticket Updated!", Toast.LENGTH_LONG).show();
                             }
 
                             @Override
                             public void onActionFailed(String err) {
+                                mAddProgressDialog.dismiss();
                                 Log.wtf(TAG, err);
                                 Toast.makeText(context, "Unable to update!", Toast.LENGTH_LONG).show();
                             }

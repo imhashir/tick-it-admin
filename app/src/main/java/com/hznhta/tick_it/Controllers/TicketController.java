@@ -8,6 +8,7 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.hznhta.tick_it.Interfaces.OnActionCompletedListener;
 import com.hznhta.tick_it.Models.MovieTicket;
 import com.hznhta.tick_it.Models.ShowTicket;
@@ -24,6 +25,7 @@ public class TicketController {
 
     public interface OnTicketsRetrievedListener {
         void onTicketsRetrieved(Ticket ticket);
+        void onNoTicketsRetrieved();
     }
 
     public static TicketController newInstance() {
@@ -97,6 +99,19 @@ public class TicketController {
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        FirebaseDatabase.getInstance().getReference("tickets").child(types[type]).orderByKey().limitToFirst(1).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getChildrenCount() == 0)
+                    mOnTicketsRetrievedListener.onNoTicketsRetrieved();
             }
 
             @Override

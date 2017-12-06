@@ -3,9 +3,11 @@ package com.hznhta.tick_it.Fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,27 +53,38 @@ public class AddAdminFragment extends Fragment {
         mCreateAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mLoadingDialog.show();
-                AccountsController.newInstance().createNewAdmin(
-                        mAdminName.getText().toString(),
-                        mAdminEmail.getText().toString(),
-                        mAdminPassword.getText().toString(),
-                        mAdminAddress.getText().toString(),
-                        new OnActionCompletedListener() {
-                            @Override
-                            public void onActionSucceed() {
-                                mLoadingDialog.dismiss();
-                                Log.i(TAG, "Account Created successfully");
-                                startActivity(NavViewActivity.newIntent(getActivity(), null));
-                                getActivity().finish();
-                            }
+                if(mAdminName.getText().length() > 0 &&
+                        mAdminName.getText().length() > 0 &&
+                        mAdminPassword.getText().length() > 0 &&
+                        mAdminAddress.getText().length() > 0) {
+                    if(Patterns.EMAIL_ADDRESS.matcher(mAdminEmail.getText().toString()).matches()) {
+                        mLoadingDialog.show();
+                        AccountsController.newInstance().createNewAdmin(
+                                mAdminName.getText().toString(),
+                                mAdminEmail.getText().toString(),
+                                mAdminPassword.getText().toString(),
+                                mAdminAddress.getText().toString(),
+                                new OnActionCompletedListener() {
+                                    @Override
+                                    public void onActionSucceed() {
+                                        mLoadingDialog.dismiss();
+                                        Log.i(TAG, "Account Created successfully");
+                                        startActivity(NavViewActivity.newIntent(getActivity(), null));
+                                        getActivity().finish();
+                                    }
 
-                            @Override
-                            public void onActionFailed(String err) {
-                                mLoadingDialog.dismiss();
-                                Log.wtf(TAG, err);
-                            }
-                        });
+                                    @Override
+                                    public void onActionFailed(String err) {
+                                        mLoadingDialog.dismiss();
+                                        Log.wtf(TAG, err);
+                                    }
+                                });
+                    } else {
+                        mAdminEmail.setError(getString(R.string.error_email_format));
+                    }
+                } else {
+                    Snackbar.make(getView(), R.string.error_empty_fields, Snackbar.LENGTH_LONG).show();
+                }
             }
         });
 

@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,22 +52,30 @@ public class SignInFragment extends Fragment {
         mSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mLoadingDialog.show();
-                AccountsController.newInstance().signInAdmin(mEmailInput.getText().toString(), mPasswordInput.getText().toString(), new OnActionCompletedListener() {
-                    @Override
-                    public void onActionSucceed() {
-                        mLoadingDialog.dismiss();
-                        Log.i(TAG, "Signed In!");
-                        startActivity(NavViewActivity.newIntent(getActivity(), null));
-                        getActivity().finish();
-                    }
+                if(mEmailInput.getText().length() > 0 && mPasswordInput.length() > 0) {
+                    if(Patterns.EMAIL_ADDRESS.matcher(mEmailInput.getText().toString()).matches()) {
+                        mLoadingDialog.show();
+                        AccountsController.newInstance().signInAdmin(mEmailInput.getText().toString(), mPasswordInput.getText().toString(), new OnActionCompletedListener() {
+                            @Override
+                            public void onActionSucceed() {
+                                mLoadingDialog.dismiss();
+                                Log.i(TAG, "Signed In!");
+                                startActivity(NavViewActivity.newIntent(getActivity(), null));
+                                getActivity().finish();
+                            }
 
-                    @Override
-                    public void onActionFailed(String err) {
-                        mLoadingDialog.dismiss();
-                        Snackbar.make(container, err, Snackbar.LENGTH_LONG).show();
+                            @Override
+                            public void onActionFailed(String err) {
+                                mLoadingDialog.dismiss();
+                                Snackbar.make(container, err, Snackbar.LENGTH_LONG).show();
+                            }
+                        });
+                    } else {
+                        mEmailInput.setError(getString(R.string.error_email_format));
                     }
-                });
+                } else {
+                    Snackbar.make(getActivity().getCurrentFocus(), R.string.error_empty_fields, Snackbar.LENGTH_LONG).show();
+                }
             }
         });
         return v;

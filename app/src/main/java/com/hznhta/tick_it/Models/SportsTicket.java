@@ -1,6 +1,8 @@
 package com.hznhta.tick_it.Models;
 
+import android.app.Activity;
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
@@ -62,50 +64,60 @@ public class SportsTicket extends Ticket {
         sAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mAddProgressDialog.show();
-                SportsTicket ticket = new SportsTicket(
-                        sTicketName.getText().toString(),
-                        Integer.parseInt(sTicketPrice.getText().toString()),
-                        Integer.parseInt(sTicketSeats.getText().toString()),
-                        sTicketPlace.getText().toString(),
-                        sTicketDate.getText().toString(),
-                        sNameTeam1.getText().toString(),
-                        sNameTeam2.getText().toString());
+                if(sTicketName.getText().length() > 0 &&
+                        sTicketPrice.getText().length() > 0 &&
+                        sTicketSeats.getText().length() > 0 &&
+                        sTicketPlace.getText().length() > 0 &&
+                        sTicketDate.getText().length() > 0 &&
+                        sNameTeam1.getText().length() > 0 &&
+                        sNameTeam2.getText().length() > 0){
+                    mAddProgressDialog.show();
+                    SportsTicket ticket = new SportsTicket(
+                            sTicketName.getText().toString(),
+                            Integer.parseInt(sTicketPrice.getText().toString()),
+                            Integer.parseInt(sTicketSeats.getText().toString()),
+                            sTicketPlace.getText().toString(),
+                            sTicketDate.getText().toString(),
+                            sNameTeam1.getText().toString(),
+                            sNameTeam2.getText().toString());
 
-                ticket.setUid(uid);
+                    ticket.setUid(uid);
 
-                switch (action) {
-                    case BUTTON_ADD:
-                        TicketController.newInstance().addNewTicket(ticket, SPORTS_TICKET, new OnActionCompletedListener() {
-                            @Override
-                            public void onActionSucceed() {
-                                mAddProgressDialog.dismiss();
-                                Toast.makeText(context, "Ticket added!", Toast.LENGTH_LONG).show();
-                            }
+                    switch (action) {
+                        case BUTTON_ADD:
+                            TicketController.newInstance().addNewTicket(ticket, SPORTS_TICKET, new OnActionCompletedListener() {
+                                @Override
+                                public void onActionSucceed() {
+                                    mAddProgressDialog.dismiss();
+                                    Toast.makeText(context, "Ticket added!", Toast.LENGTH_LONG).show();
+                                }
 
-                            @Override
-                            public void onActionFailed(String err) {
-                                mAddProgressDialog.dismiss();
-                                Toast.makeText(context, "Unable to Add Ticket", Toast.LENGTH_LONG).show();
-                            }
-                        });
-                        break;
-                    case BUTTON_UPDATE:
-                        TicketController.newInstance().updateTicket(ticket, SPORTS_TICKET, new OnActionCompletedListener() {
-                            @Override
-                            public void onActionSucceed() {
-                                mAddProgressDialog.dismiss();
-                                Toast.makeText(context, "Ticket Updated!", Toast.LENGTH_LONG).show();
-                            }
+                                @Override
+                                public void onActionFailed(String err) {
+                                    mAddProgressDialog.dismiss();
+                                    Toast.makeText(context, "Unable to Add Ticket", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                            break;
+                        case BUTTON_UPDATE:
+                            TicketController.newInstance().updateTicket(ticket, SPORTS_TICKET, new OnActionCompletedListener() {
+                                @Override
+                                public void onActionSucceed() {
+                                    mAddProgressDialog.dismiss();
+                                    Toast.makeText(context, "Ticket Updated!", Toast.LENGTH_LONG).show();
+                                }
 
-                            @Override
-                            public void onActionFailed(String err) {
-                                mAddProgressDialog.dismiss();
-                                Log.wtf(TAG, err);
-                                Toast.makeText(context, "Unable to update!", Toast.LENGTH_LONG).show();
-                            }
-                        });
-                        break;
+                                @Override
+                                public void onActionFailed(String err) {
+                                    mAddProgressDialog.dismiss();
+                                    Log.wtf(TAG, err);
+                                    Toast.makeText(context, "Unable to update!", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                            break;
+                    }
+                } else {
+                    Snackbar.make(((Activity)context).getCurrentFocus(), R.string.error_empty_fields, Snackbar.LENGTH_LONG).show();
                 }
             }
         });

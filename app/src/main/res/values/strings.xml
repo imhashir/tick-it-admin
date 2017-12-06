@@ -7,6 +7,8 @@
     <string name="show_option">Show</string>
     <string name="transport_option">Transport</string>
     <string name="option_none">Select</string>
+    <string name="error_empty_fields">One or more fields are empty!</string>
+    <string name="error_email_format">Invalid email format</string>
 
     <string-array name="ticket_types">
         <item>@string/option_none</item>
